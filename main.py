@@ -1,12 +1,11 @@
 import warnings
-from request import RequestManager
+from game import Game
 warnings.filterwarnings("ignore")
 
 
 def quiz_mvp():
-    req = RequestManager()
-    req.generate_conflict_question()
-    #score = 0
+    game = Game("serie", 0, n_questions= 5)
+    game.run()
 
 
 if __name__ == '__main__':

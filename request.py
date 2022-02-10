@@ -32,7 +32,10 @@ class RequestManager():
         return results_df
 
     def filter_attributes(self, attributes):
-        properties = [property for property in attributes if property.endswith("value") and property != "itemLabel.value"]
+        properties = [property for property in attributes \
+                      if property.endswith("value") and \
+                      property != "item.value"
+                      ]
         return properties
 
     def check_candidate_validity(self, df, candidate, attribute):
@@ -67,7 +70,7 @@ class RequestManager():
                                              answer_attribute)
             if name:
                 selected = True
-        answer = set(list(df[df["item.value"] == candidate_id][answer_attribute].drop_duplicates()))
+        answer = list(df[df["item.value"] == candidate_id][answer_attribute].drop_duplicates())[0]
         options = set(list(df[df["item.value"] != candidate_id][answer_attribute].drop_duplicates()))
         return name, answer_attribute, answer, options
 
@@ -75,8 +78,6 @@ class RequestManager():
 
     def generate_conflict_question(self):
         result_df = self.execute(self.conflit_request)
-        element, to_ask, answer, options = (self.select_answer(result_df))
-        print(to_ask, " of ", element, " ?", "(The actual answer is ", answer, ")")
-        print("Other options are: ", options)
-        return answer
+        element, to_ask, answer, options = self.select_answer(result_df)
+        return element, to_ask, answer,list(options)[:3]
 
