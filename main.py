@@ -4,7 +4,7 @@ warnings.filterwarnings("ignore")
 
 
 def quiz_mvp():
-    game = Game("serie", 0, n_questions= 5)
+    game = Game("standard", 0, n_questions= 5)
     game.run()
 
 
