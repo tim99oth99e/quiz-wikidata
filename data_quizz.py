@@ -55,10 +55,10 @@ def get_more_questions(type,n_questions=10):
     return list_questions,list_answers,list_options
 
 
-list_questions,list_answers,list_options=get_more_questions('cities',10)
+'''list_questions,list_answers,list_options=get_more_questions('cities',10)
 
 data = {"question":list_questions, "answer":list_answers,"options":list_options}
 jsonString = json.dumps(data)
 jsonFile = open("data_quizz.json", "w")
 jsonFile.write(jsonString)
-jsonFile.close()
+jsonFile.close()'''

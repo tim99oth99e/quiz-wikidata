@@ -10,6 +10,14 @@ class Quiz:
 
 		self.q_no=0
 
+		self.type='cities'
+
+		list_questions,list_answers,list_options=get_more_questions(self.type,10)
+
+		self.question=list_questions
+		self.answer=list_answers
+		self.options=list_options
+
 		self.display_title()
 		self.display_question()
 
@@ -25,7 +33,7 @@ class Quiz:
 
 		self.buttons()
 
-		self.data_size=len(question)
+		self.data_size=len(self.question)
 
 		self.correct=0
 
@@ -42,7 +50,7 @@ class Quiz:
 
 	def check_ans(self, q_no):
 
-		if self.opt_selected.get() == answer[q_no]:
+		if self.opt_selected.get() == self.answer[q_no]:
 			return True
 
 	def next_btn(self):
@@ -81,14 +89,14 @@ class Quiz:
 
 		self.opt_selected.set(0)
 
-		for option in options[self.q_no]:
+		for option in self.options[self.q_no]:
 			self.opts[val]['text']=option
 			val+=1
 
 
 	def display_question(self):
 
-		q_no = Label(gui, text=question[self.q_no], width=60,
+		q_no = Label(gui, text=self.question[self.q_no], width=60,
 		font=( 'ariel' ,16, 'bold' ), anchor= 'w' )
 
 		q_no.place(x=70, y=100)
@@ -128,11 +136,6 @@ gui.geometry("800x450")
 gui.title("Connaissance et raisonnement Quiz")
 
 request_manager =  RequestManager()
-list_questions,list_answers,list_options=get_more_questions('cities',10)
-
-question = (list_questions)
-options = (list_options)
-answer = (list_answers)
 
 quiz = Quiz()
 
