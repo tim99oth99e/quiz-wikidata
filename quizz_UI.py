@@ -128,7 +128,7 @@ gui.geometry("800x450")
 gui.title("Connaissance et raisonnement Quiz")
 
 request_manager =  RequestManager()
-list_questions,list_answers,list_options=get_more_questions(10)
+list_questions,list_answers,list_options=get_more_questions('cities',10)
 
 question = (list_questions)
 options = (list_options)

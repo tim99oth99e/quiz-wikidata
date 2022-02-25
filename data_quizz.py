@@ -40,10 +40,11 @@ def get_more_questions(type,n_questions=10):
                 list_answers.append(idx+1)
                 i+=1
     if type=='cities':
-             
+        already_listed=[]
         while i<=n_questions:
             element, to_ask, answer, options = request_manager.generate_city_question()
-            if len(options)==3:
+            if len(options)==3 and to_ask not in already_listed:
+                already_listed.append(to_ask)
                 to_ask='In which country is the city of '+to_ask+' located?'
                 list_questions.append(to_ask)
                 idx=random.randrange(0, len(options)+1)

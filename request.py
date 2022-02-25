@@ -102,7 +102,7 @@ class RequestManager():
         random_result = random.randint(0, len(result_array)-1)
         city, country = result_array[random_result]
         # list the other countries
-        other_countries = [c for c in result_array[:, 1] if c != country]
+        other_countries = [c for c in result_array[:, 1] if (c != country) & (c!= 'Nazi Germany')]
         others_countries=list(set(other_countries))
         if len(other_countries)>=3:
             options=random.sample(other_countries, 3)
