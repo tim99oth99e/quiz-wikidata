@@ -81,3 +81,32 @@ class RequestManager():
         element, to_ask, answer, options = self.select_answer(result_df)
         return element, to_ask, answer,list(options)[:3]
 
+    def generate_city_question(self):
+        """_summary_
+
+        Returns:
+            str: _description_
+            str: city name of which the country name has to be guessed
+        """
+        self.request = """SELECT ?cityLabel ?countryLabel
+            WHERE {
+            ?city wdt:P31 wd:Q1549591 . hint:Prior hint:runFirst true .
+            ?city wdt:P17 ?country .
+
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+            }
+            LIMIT 30"""
+        # retrieves only city and country names
+        result_array = self.execute(self.request)[["cityLabel.value", "countryLabel.value"]].to_numpy()
+        # select randomly one city
+        random_result = random.randint(0, len(result_array)-1)
+        city, country = result_array[random_result]
+        # list the other countries
+        other_countries = [c for c in result_array[:, 1] if c != country]
+        others_countries=list(set(other_countries))
+        if len(other_countries)>=3:
+            options=random.sample(other_countries, 3)
+        else:
+            options=other_countries
+        return None, city, country, options
+
