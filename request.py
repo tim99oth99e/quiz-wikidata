@@ -2,6 +2,8 @@ import pandas as pd
 import random
 import re
 from SPARQLWrapper import SPARQLWrapper, JSON
+import numpy as np
+
 
 class RequestManager():
     def __init__(self, url = "https://query.wikidata.org/sparql"):
@@ -22,7 +24,6 @@ class RequestManager():
                                 ORDER BY ?random
                                 LIMIT %s
                                 """ %self.safety_limit
-
 
     def execute(self, request):
         self.sparql.setQuery(request)
@@ -48,7 +49,6 @@ class RequestManager():
             return
         return name
 
-
     def select_answer(self, df):
         # tous les éléments renvoyés
         ids = list(df["item.value"].drop_duplicates())
@@ -73,9 +73,7 @@ class RequestManager():
         answer = list(df[df["item.value"] == candidate_id][answer_attribute].drop_duplicates())[0]
         options = set(list(df[df["item.value"] != candidate_id][answer_attribute].drop_duplicates()))
         return name, answer_attribute, answer, options
-
-
-
+        
     def generate_conflict_question(self):
         result_df = self.execute(self.conflit_request)
         element, to_ask, answer, options = self.select_answer(result_df)
@@ -102,11 +100,6 @@ class RequestManager():
         random_result = random.randint(0, len(result_array)-1)
         city, country = result_array[random_result]
         # list the other countries
-        other_countries = [c for c in result_array[:, 1] if (c != country) & (c!= 'Nazi Germany')]
-        others_countries=list(set(other_countries))
-        if len(other_countries)>=3:
-            options=random.sample(other_countries, 3)
-        else:
-            options=other_countries
-        return None, city, country, options
+        other_countries = [c for c in np.unique(result_array[:, 1]) if (c != country) & (c!= 'Nazi Germany')]
+        return None, city, country, random.sample(other_countries, 3)
 
