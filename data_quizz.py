@@ -45,7 +45,7 @@ def get_more_questions(type,n_questions=10):
             element, to_ask, answer, options = request_manager.generate_city_question()
             if len(options)==3 and to_ask not in already_listed:
                 already_listed.append(to_ask)
-                to_ask='In which country is the city of '+to_ask+' located?'
+                to_ask=f'In which country is the city {to_ask} located?'
                 list_questions.append(to_ask)
                 idx=random.randrange(0, len(options)+1)
                 options.insert(idx,answer)
@@ -53,12 +53,3 @@ def get_more_questions(type,n_questions=10):
                 list_answers.append(idx+1)
                 i+=1
     return list_questions,list_answers,list_options
-
-
-'''list_questions,list_answers,list_options=get_more_questions('cities',10)
-
-data = {"question":list_questions, "answer":list_answers,"options":list_options}
-jsonString = json.dumps(data)
-jsonFile = open("data_quizz.json", "w")
-jsonFile.write(jsonString)
-jsonFile.close()'''

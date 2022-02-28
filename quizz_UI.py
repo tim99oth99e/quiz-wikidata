@@ -21,15 +21,11 @@ class Quiz:
 		self.display_title()
 		self.display_question()
 
-
 		self.opt_selected=IntVar()
-
 
 		self.opts=self.radio_buttons()
 
-
 		self.display_options()
-
 
 		self.buttons()
 
